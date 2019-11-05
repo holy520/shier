@@ -1,0 +1,71 @@
+// Chapter7_1.cpp : Defines the entry point for the console application.
+//
+
+#include<stdio.h>
+
+int age(int);
+
+float average_1(float score[3][5], int n,int m);//求某一学生的平均分
+float average_2(float score[3][5], int n,int m);//求某一门功课的平均分
+
+
+int main(int argc, char* argv[])
+{
+// 矩阵A用于记录学生分数 A的每行记录一个学生多门功课分数
+	float A[3][5]={0,0}; //本例设定有3名同学，每名同学选修5门课程
+	int i,j,k;
+	int N=3; //矩阵A的行数
+	int M=5; //矩阵A的列数
+	FILE * fp;
+	fp = fopen (".\\score.txt", "r");
+
+	// 读入班级学生的分数
+	for(i=0;i<N;i++)
+	{
+		for(int j=0;j<M;j++)
+		{			
+			fscanf(fp, "%f", &A[i][j]);
+		}
+		
+	}
+	fclose(fp);
+	//读入分数结束
+
+	printf(" 第一名同学平均成绩: %f\n", average_1(A,0,5));//A是所有人成绩；0-A的第一行；5-每人5门功课
+
+//	printf("age 3= %d\n",age(3));
+	return 0;
+}
+
+int age(int n)
+{
+	int c;
+	if(n==1) 
+		c=10;
+	else
+		c=age(n-1)+2;
+
+	return c;
+}
+
+//求某一个学生的平均分  score-所有学生的分数；n-学生序号（是行的下标）；m-功课总数
+float average_1(float score[3][5], int n,int m)
+{
+	float aver=0;
+	for(int i=0;i<m;i++)
+	{
+		aver=aver+score[n][i];
+	}
+	return aver/m;
+}
+
+//求某一门功课的平均分 score-所有学生的分数；n-学生总数；m-某门功课（是列的下标）
+float average_2(float score[3][5], int n,int m)
+{
+	float aver=0;
+	for(int i=0;i<n;i++)
+	{
+		aver=aver+score[i][m];
+	}
+	return aver/n;
+}
